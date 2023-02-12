@@ -51,7 +51,7 @@ const socket = new WebSocket(`wss://${host}/timer/${props.id}`)
 
 
 const initTimer = () => {
-  fetch(`https//${host}/init/${props.id}`)
+  fetch(`https://${host}/init/${props.id}`)
 }
 
 onMounted(() => {
@@ -65,7 +65,7 @@ onMounted(() => {
 
 
 const readTimer = () => {
-  fetch(`https//${host}/read/${props.id}`)
+  fetch(`https://${host}/read/${props.id}`)
     .then((res) => res.json())
     .then((data) => {
       remain.value = data
@@ -73,18 +73,18 @@ const readTimer = () => {
 }
 
 const startTimer = () => {
-  fetch(`https//${host}/start/${props.id}`)
+  fetch(`https://${host}/start/${props.id}`)
 }
 
 const restartTimer = () => {
-  fetch(`https//${host}/restart/${props.id}`)
+  fetch(`https://${host}/restart/${props.id}`)
 }
 
 const resetTimer = () => {
-  fetch(`https//${host}/reset/${props.id}`)
+  fetch(`https://${host}/reset/${props.id}`)
 }
 
 const stopTimer = () => {
-  fetch(`https//${host}/stop/${props.id}`)
+  fetch(`https://${host}/stop/${props.id}`)
 }
 </script>
