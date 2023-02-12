@@ -13,14 +13,11 @@
         </VCol>
       </VRow>
       <VRow>
-        <VCol>
-          <VBtn @click="readTimer">get</VBtn>
-        </VCol>
+        <!-- <VCol>
+          <VBtn @click="startTimer">start</VBtn>
+        </VCol> -->
         <VCol>
           <VBtn @click="startTimer">start</VBtn>
-        </VCol>
-        <VCol>
-          <VBtn @click="restartTimer">restart</VBtn>
         </VCol>
         <VCol>
           <VBtn @click="resetTimer">reset</VBtn>
@@ -50,7 +47,6 @@ const props = defineProps({
 const socket = new WebSocket(`${wshost}/timer/${props.id}`)
 
 const initTimer = () => {
-  console.log(process.env.TEST)
   fetch(`${host}/init/${props.id}`)
 }
 
@@ -64,20 +60,12 @@ onMounted(() => {
 })
 
 
-const readTimer = () => {
-  fetch(`${host}/read/${props.id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      remain.value = data
-    })
-}
+// const startTimer = () => {
+//   fetch(`${host}/start/${props.id}`)
+// }
 
 const startTimer = () => {
   fetch(`${host}/start/${props.id}`)
-}
-
-const restartTimer = () => {
-  fetch(`${host}/restart/${props.id}`)
 }
 
 const resetTimer = () => {
