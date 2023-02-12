@@ -13,9 +13,6 @@
         </VCol>
       </VRow>
       <VRow>
-        <!-- <VCol>
-          <VBtn @click="startTimer">start</VBtn>
-        </VCol> -->
         <VCol>
           <VBtn @click="startTimer">start</VBtn>
         </VCol>
@@ -26,7 +23,6 @@
           <VBtn @click="stopTimer">stop</VBtn>
         </VCol>
       </VRow>
-
     </VContainer>
   </VCard>
 </template>
@@ -47,22 +43,8 @@ const props = defineProps({
 const socket = new WebSocket(`${wshost}/timer/${props.id}`)
 
 const initTimer = () => {
-  fetch(`${host}/init/${props.id}`)
+  fetch(`${host}/init/${props.id}?remain=300`)
 }
-
-onMounted(() => {
-  initTimer()
-
-  socket.onmessage = (event) => {
-    console.log(remain.value)
-    remain.value = event.data
-  }
-})
-
-
-// const startTimer = () => {
-//   fetch(`${host}/start/${props.id}`)
-// }
 
 const startTimer = () => {
   fetch(`${host}/start/${props.id}`)
@@ -75,4 +57,14 @@ const resetTimer = () => {
 const stopTimer = () => {
   fetch(`${host}/stop/${props.id}`)
 }
+
+onMounted(() => {
+  initTimer()
+
+  socket.onmessage = (event) => {
+    console.log(remain.value)
+    remain.value = event.data
+  }
+})
+
 </script>
