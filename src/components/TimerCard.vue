@@ -7,7 +7,9 @@
     <VContainer>
       <VRow>
         <VCol>
-          {{ Math.floor(remain / 60) + ":" + remain % 60 }}
+          <h2>
+            {{ Math.floor(remain / 60) + ":" + remain % 60 }}
+          </h2>
         </VCol>
       </VRow>
       <VRow>
@@ -37,21 +39,19 @@
 import { ref, onMounted } from "vue"
 
 const remain = ref(0)
-const host = "mb-commissions-maintaining-longer.trycloudflare.com"
-// const host = "localhost:8080"
+const host = import.meta.env.VITE_HOST
+const wshost = import.meta.env.VITE_WSHOST
 
 
 const props = defineProps({
   id: String
 })
 
-const socket = new WebSocket(`wss://${host}/timer/${props.id}`)
-
-
-
+const socket = new WebSocket(`${wshost}/timer/${props.id}`)
 
 const initTimer = () => {
-  fetch(`https://${host}/init/${props.id}`)
+  console.log(process.env.TEST)
+  fetch(`${host}/init/${props.id}`)
 }
 
 onMounted(() => {
@@ -65,7 +65,7 @@ onMounted(() => {
 
 
 const readTimer = () => {
-  fetch(`https://${host}/read/${props.id}`)
+  fetch(`${host}/read/${props.id}`)
     .then((res) => res.json())
     .then((data) => {
       remain.value = data
@@ -73,18 +73,18 @@ const readTimer = () => {
 }
 
 const startTimer = () => {
-  fetch(`https://${host}/start/${props.id}`)
+  fetch(`${host}/start/${props.id}`)
 }
 
 const restartTimer = () => {
-  fetch(`https://${host}/restart/${props.id}`)
+  fetch(`${host}/restart/${props.id}`)
 }
 
 const resetTimer = () => {
-  fetch(`https://${host}/reset/${props.id}`)
+  fetch(`${host}/reset/${props.id}`)
 }
 
 const stopTimer = () => {
-  fetch(`https://${host}/stop/${props.id}`)
+  fetch(`${host}/stop/${props.id}`)
 }
 </script>
