@@ -1,25 +1,34 @@
 <template>
-  <h1> Timer id: {{ id }}</h1>
 
-  <VCard>
-    <p>
-      {{ remain }}
-    </p>
-    <p>
-      <VBtn @click="readTimer">get</VBtn>
-    </p>
-    <p>
-      <VBtn @click="startTimer">start</VBtn>
-    </p>
-    <p>
-      <VBtn @click="restartTimer">restart</VBtn>
-    </p>
-    <p>
-      <VBtn @click="resetTimer">reset</VBtn>
-    </p>
-    <p>
-      <VBtn @click="stopTimer">stop</VBtn>
-    </p>
+  <VCard :elevation="2" max-width="600">
+    <VCardTitle>
+      Timer id: {{ id }}
+    </VCardTitle>
+    <VContainer>
+      <VRow>
+        <VCol>
+          {{ Math.floor(remain / 60) + ":" + remain % 60 }}
+        </VCol>
+      </VRow>
+      <VRow>
+        <VCol>
+          <VBtn @click="readTimer">get</VBtn>
+        </VCol>
+        <VCol>
+          <VBtn @click="startTimer">start</VBtn>
+        </VCol>
+        <VCol>
+          <VBtn @click="restartTimer">restart</VBtn>
+        </VCol>
+        <VCol>
+          <VBtn @click="resetTimer">reset</VBtn>
+        </VCol>
+        <VCol>
+          <VBtn @click="stopTimer">stop</VBtn>
+        </VCol>
+      </VRow>
+
+    </VContainer>
   </VCard>
 </template>
 
@@ -28,19 +37,21 @@
 import { ref, onMounted } from "vue"
 
 const remain = ref(0)
+const host = "mb-commissions-maintaining-longer.trycloudflare.com"
+// const host = "localhost:8080"
 
 
 const props = defineProps({
   id: String
 })
 
-const socket = new WebSocket(`ws://localhost:8080/timer/${props.id}`)
+const socket = new WebSocket(`ws://${host}/timer/${props.id}`)
 
 
 
 
 const initTimer = () => {
-  fetch(`http://localhost:8080/init/${props.id}`)
+  fetch(`http://${host}/init/${props.id}`)
 }
 
 onMounted(() => {
@@ -54,7 +65,7 @@ onMounted(() => {
 
 
 const readTimer = () => {
-  fetch(`http://localhost:8080/read/${props.id}`)
+  fetch(`http://${host}/read/${props.id}`)
     .then((res) => res.json())
     .then((data) => {
       remain.value = data
@@ -62,18 +73,18 @@ const readTimer = () => {
 }
 
 const startTimer = () => {
-  fetch(`http://localhost:8080/start/${props.id}`)
+  fetch(`http://${host}/start/${props.id}`)
 }
 
 const restartTimer = () => {
-  fetch(`http://localhost:8080/restart/${props.id}`)
+  fetch(`http://${host}/restart/${props.id}`)
 }
 
 const resetTimer = () => {
-  fetch(`http://localhost:8080/reset/${props.id}`)
+  fetch(`http://${host}/reset/${props.id}`)
 }
 
 const stopTimer = () => {
-  fetch(`http://localhost:8080/stop/${props.id}`)
+  fetch(`http://${host}/stop/${props.id}`)
 }
 </script>
